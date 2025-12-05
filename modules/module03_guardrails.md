@@ -1,16 +1,34 @@
 # Module 03 — Guardrails
 
+**Change Log:**  
+- Added strict evidence mode  
+- Added standardized warning messages for missing or short sections  
+
 **Purpose:**  
-Ensure compliance with boundaries and constraints.
+Ensure all summaries follow the original paper and enforce accuracy + section quality checks.
 
-**Steps:**  
-1. Check for hallucinations (no invented facts/citations).  
-2. Verify summaries follow section order.  
-3. Validate warnings for missing/short sections.  
+---
 
-**Conditional Rules:**  
-- If hallucination detected → discard and reprocess.  
-- If section order incorrect → reorder.  
+### A — Strict Evidence Mode
 
-**Context Passing:**  
-Pass validated summaries to **Module 04 — Rendering & Refinement**.
+Add variable:  
+`evidence_mode`
+
+When `evidence_mode = "strict"`:
+- Only include information **explicitly present** in the source text  
+- If not enough information is available:
+  - Output: “Not enough evidence in the source text to summarize this section in strict evidence mode.”
+
+---
+
+### B — Standardized Warning Messages
+
+- If section text is missing:
+  - Output: “Section skipped: no usable text was provided.”
+- If section text < 50 words:
+  - Output: “Section very short: summary may be incomplete.”
+
+---
+
+**Output:**  
+Pass validated summaries + warnings to Module 04 for final report rendering.
